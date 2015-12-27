@@ -19,13 +19,20 @@
 ## of said matrix
 
 makeCacheMatrix <- function(X = matrix()) 
+## makeCacheMatrix will be used to set up a square matrix with custom 
+## parameters
 {
   
   inverse <- NULL
   
+## Sets value of object "inverse" to NULL if cacheSolve hasn't been run
+  
   set <- function(Y){
-    X <<- Y
+    X <<- Y 
+##  caches matrix for cacheSolve to check against for change
+
     inverse <<- NULL
+##  sets the value of inverse from cacheSolve to NULL
   }
   
 get <- function() X
@@ -36,10 +43,13 @@ getInverse <- function() inverse
 
 list(set = get, get = get, setInverse = setInverse, getInverse = getInverse)
 
+## List for functions
+
 }
 
 
 ## cacheSolve:
+
 ## This function computes the inverse of the "matrix" 
 ## produced via makeCacheMatrix above. This gets the user by the default
 ## "NULL" result when trying to use $getInverse by computing inverse of 
@@ -51,19 +61,27 @@ list(set = get, get = get, setInverse = setInverse, getInverse = getInverse)
 
 cacheSolve <- function(X, ...) {
 inverse <- X$getInverse() 
+## Draws inverse from cache if it has been calculated w/ cacheSolve
+
 if(!is.null(inverse)) {
+  
+## Determine if cacheSolve has already been run, if so, displays message
+## and draws matrix from cache
   message("Fetching cached matrix!")
   
   return(inverse)
 }
 
   custmatr <- X$get()
-  
+## custmatr = "Custom Matrix" 
   
   
   inverse <- solve(custmatr, ...)
+## This will compute the inverse of the user's custom matrix
   X$setInverse(inverse)
+## run the setinverse function on the inverse to cache the inverse
   inverse
+## returns inverse
 }
 
 
